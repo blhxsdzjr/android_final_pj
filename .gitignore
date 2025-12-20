@@ -1,0 +1,53 @@
+# Gradle files
+.gradle/
+build/
+/*/build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/cache files
+*.log
+*.gz
+
+# Android Studio generated files
+.idea/
+*.iml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+
+# User-specific configurations
+.idea/shelf
+.idea/deploymentTargetSelector.xml
+
+# Keystore files
+# *.jks
+# *.keystore
+
+# Android Studio Captures
+captures/
+
+# External native build artifacts
+.externalNativeBuild
+.cxx
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Mobile tools
+.mtj.tmp/
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.apk
+*.aar
+*.bundle
