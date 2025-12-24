@@ -2,4 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Course Colors -->
+    <color name="course_1">#E3F2FD</color>
+    <color name="course_2">#F1F8E9</color>
+    <color name="course_3">#FFF3E0</color>
+    <color name="course_4">#F3E5F5</color>
+    <color name="course_5">#E8EAF6</color>
+    <color name="course_6">#E0F2F1</color>
+    <color name="course_7">#FBE9E7</color>
+    
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
 </resources>

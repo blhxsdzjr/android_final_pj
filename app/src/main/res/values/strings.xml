@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">final_pj</string>
+    <string name="app_name">CampusHelper</string>
+    
+    <!-- Navigation Titles -->
+    <string name="title_home">首页</string>
+    <string name="title_map">地图</string>
+    <string name="title_schedule">日程</string>
+    <string name="title_discovery">发现</string>
+    <string name="title_profile">我的</string>
+
+    <!-- Fragment Titles/Text -->
+    <string name="fragment_home_text">首页概览</string>
+    <string name="fragment_map_text">校园地图</string>
+    <string name="fragment_schedule_text">课程与日程</string>
+    <string name="fragment_discovery_text">发现新鲜事</string>
+    <string name="fragment_profile_text">个人中心</string>
+
+    <string-array name="days_of_week">
+        <item>周一</item>
+        <item>周二</item>
+        <item>周三</item>
+        <item>周四</item>
+        <item>周五</item>
+        <item>周六</item>
+        <item>周日</item>
+    </string-array>
 </resources>
