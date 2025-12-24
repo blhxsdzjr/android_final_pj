@@ -19,6 +19,11 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.example.final_pj.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+
 public class MapFragment extends Fragment {
 
     private MapView mapView;
@@ -26,27 +31,28 @@ public class MapFragment extends Fragment {
     private FloatingActionButton fabLocation;
     private static final int PERMISSION_REQUEST_CODE = 100;
 
+    // 杭州师范大学仓前校区中心坐标
+    private static final LatLng HZNU_CANGQIAN = new LatLng(30.295487, 120.004844);
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Privacy policy requirement for Amap SDK 8.1.0+
         MapsInitializer.updatePrivacyShow(requireContext(), true, true);
         MapsInitializer.updatePrivacyAgree(requireContext(), true);
-        
-        // Set Security Key (安全密钥)
-        // 注意：这里传入的是安全密钥 2cc14774025f2fb3b2fa3fc5fca6ab45，不是 API Key
         MapsInitializer.setApiKey("2cc14774025f2fb3b2fa3fc5fca6ab45");
         
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = view.findViewById(R.id.map_view);
         fabLocation = view.findViewById(R.id.fab_location);
 
-        // Required by AMap
         mapView.onCreate(savedInstanceState);
-
         initMap();
 
-        fabLocation.setOnClickListener(v -> checkPermissionAndLocate());
+        // 点击按钮回到校园中心
+        fabLocation.setOnClickListener(v -> {
+            aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(HZNU_CANGQIAN, 16f));
+            Toast.makeText(getContext(), "已回到仓前校区", Toast.LENGTH_SHORT).show();
+        });
 
         return view;
     }
@@ -56,17 +62,35 @@ public class MapFragment extends Fragment {
             aMap = mapView.getMap();
         }
 
-        // Setup Blue dot style
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);
-        myLocationStyle.interval(2000); // 2 seconds
-        aMap.setMyLocationStyle(myLocationStyle);
+        // 设置默认缩放级别和中心点
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HZNU_CANGQIAN, 16f));
         
-        aMap.getUiSettings().setMyLocationButtonEnabled(false); // We use custom FAB
+        // 显示室内地图（如果高德支持该区域）
+        aMap.showIndoorMap(true);
         aMap.getUiSettings().setZoomControlsEnabled(true);
+        aMap.getUiSettings().setCompassEnabled(true);
+
+        addCampusMarkers();
+    }
+
+    private void addCampusMarkers() {
+        // 添加校园关键地点
+        addMarker(30.2965, 120.0060, "杭师大图书馆", "仓前校区核心地标");
+        addMarker(30.2940, 120.0035, "第一餐厅", "美食聚集地");
+        addMarker(30.2980, 120.0020, "恕园教学楼", "日常上课地点");
+        addMarker(30.2930, 120.0080, "体育场", "运动健身区");
+    }
+
+    private void addMarker(double lat, double lng, String title, String snippet) {
+        MarkerOptions options = new MarkerOptions();
+        options.position(new LatLng(lat, lng));
+        options.title(title);
+        options.snippet(snippet);
+        aMap.addMarker(options);
     }
 
     private void checkPermissionAndLocate() {
+        // 模拟器下此功能受限，保留作为真实手机使用
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
