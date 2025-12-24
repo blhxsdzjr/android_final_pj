@@ -19,59 +19,101 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.example.final_pj.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.services.geocoder.GeocodeQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeResult;
+import android.widget.SearchView;
+import android.widget.Button;
 
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements GeocodeSearch.OnGeocodeSearchListener {
 
     private MapView mapView;
     private AMap aMap;
     private FloatingActionButton fabLocation;
-    private static final int PERMISSION_REQUEST_CODE = 100;
+    private SearchView searchView;
+    private Button btnSearch;
+    private GeocodeSearch geocoderSearch;
 
-    // 杭州师范大学仓前校区中心坐标
+    private static final int PERMISSION_REQUEST_CODE = 100;
     private static final LatLng HZNU_CANGQIAN = new LatLng(30.295487, 120.004844);
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MapsInitializer.updatePrivacyShow(requireContext(), true, true);
-        MapsInitializer.updatePrivacyAgree(requireContext(), true);
-        MapsInitializer.setApiKey("2cc14774025f2fb3b2fa3fc5fca6ab45");
-        
+        try {
+            MapsInitializer.updatePrivacyShow(requireContext(), true, true);
+            MapsInitializer.updatePrivacyAgree(requireContext(), true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = view.findViewById(R.id.map_view);
         fabLocation = view.findViewById(R.id.fab_location);
+        searchView = view.findViewById(R.id.search_view);
+        btnSearch = view.findViewById(R.id.btn_search);
 
         mapView.onCreate(savedInstanceState);
         initMap();
 
-        // 点击按钮回到校园中心
-        fabLocation.setOnClickListener(v -> {
-            aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(HZNU_CANGQIAN, 16f));
-            Toast.makeText(getContext(), "已回到仓前校区", Toast.LENGTH_SHORT).show();
-        });
+        fabLocation.setOnClickListener(v -> aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(HZNU_CANGQIAN, 16f)));
+        btnSearch.setOnClickListener(v -> performSearch());
 
         return view;
     }
 
     private void initMap() {
-        if (aMap == null) {
-            aMap = mapView.getMap();
-        }
-
-        // 设置默认缩放级别和中心点
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HZNU_CANGQIAN, 16f));
+        if (aMap == null) aMap = mapView.getMap();
         
-        // 显示室内地图（如果高德支持该区域）
-        aMap.showIndoorMap(true);
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HZNU_CANGQIAN, 16f));
         aMap.getUiSettings().setZoomControlsEnabled(true);
-        aMap.getUiSettings().setCompassEnabled(true);
-
         addCampusMarkers();
+
+        try {
+            geocoderSearch = new GeocodeSearch(getContext());
+            geocoderSearch.setOnGeocodeSearchListener(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    private void performSearch() {
+        String query = searchView.getQuery().toString().trim();
+        if (query.isEmpty()) {
+            Toast.makeText(getContext(), "请输入搜索地址", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // 第二个参数 "杭州" 用于限定城市，提高搜索准确率
+        GeocodeQuery geocodeQuery = new GeocodeQuery(query, "杭州");
+        geocoderSearch.getFromLocationNameAsyn(geocodeQuery);
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult result, int rCode) {
+        if (rCode == 1000) { // 1000 is success code
+            if (result != null && result.getGeocodeAddressList() != null && !result.getGeocodeAddressList().isEmpty()) {
+                com.amap.api.services.geocoder.GeocodeAddress address = result.getGeocodeAddressList().get(0);
+                com.amap.api.services.core.LatLonPoint latLonPoint = address.getLatLonPoint();
+                LatLng latLng = new LatLng(latLonPoint.getLatitude(), latLonPoint.getLongitude());
+
+                aMap.clear(); // 清除旧标记
+                addCampusMarkers(); // 重新添加校园标记
+                aMap.addMarker(new MarkerOptions().position(latLng).title(address.getFormatAddress()));
+                aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f));
+            } else {
+                Toast.makeText(getContext(), "未找到相关地址", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getContext(), "搜索失败, 错误码: " + rCode, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
+        // Not used in this scenario
+    }
+
 
     private void addCampusMarkers() {
         // 添加校园关键地点
