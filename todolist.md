@@ -32,6 +32,16 @@ This document tracks the development progress of the "Campus Assistant" Android 
             - [ ] `ProfileFragment`（用户设置）
     - [ ] Implement navigation logic (switching between fragments).
         - [ ] 实现导航逻辑（在 Fragment 之间切换）。
+- [x] **User Login Module**
+    - [x] **用户登录模块**
+    - [x] **Requirement**: Guests cannot access; logged-in users can access; no admin role needed.
+        - [x] **需求**：游客不可访问；登录用户可访问；无需管理员角色。
+    - [x] Create `User` Entity and `UserDao`.
+        - [x] 创建 `User` 实体和 `UserDao`。
+    - [x] Implement `LoginActivity` and `RegisterActivity`.
+        - [x] 实现 `LoginActivity` 和 `RegisterActivity`。
+    - [x] Update `SplashActivity` to redirect to Login if not authenticated.
+        - [x] 更新 `SplashActivity`，如果未验证则重定向到登录页面。
 - [ ] **Login/Startup (Optional/Basic)**
     - [ ] **登录/启动（可选/基础）**
     - [ ] Design a simple Splash Screen.

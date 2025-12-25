@@ -12,13 +12,14 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Course.class, Todo.class}, version = 4, exportSchema = false)
+@Database(entities = {Course.class, Todo.class, User.class}, version = 5, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
 
     public abstract CourseDao courseDao();
     public abstract TodoDao todoDao();
+    public abstract UserDao userDao();
 
     public static synchronized AppDatabase getInstance(android.content.Context context) {
         if (instance == null) {
