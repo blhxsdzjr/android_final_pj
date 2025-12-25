@@ -73,7 +73,7 @@
         <!-- Amap API Key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="9f4bd8d942d699e6224870a360278f26" />
+            android:value="25436b050dce6afde70ed3de11ea6876" />
     </application>
 
 </manifest>

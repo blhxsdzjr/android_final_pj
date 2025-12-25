@@ -11,6 +11,7 @@ navigation = "2.8.5"
 room = "2.6.1"
 amap-map = "9.5.0"
 amap-location = "6.4.1"
+amap-search = "9.7.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -27,6 +28,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 amap-map-lib = { group = "com.amap.api", name = "3dmap", version.ref = "amap-map" }
 amap-location-lib = { group = "com.amap.api", name = "location", version.ref = "amap-location" }
+amap-search-lib = { group = "com.amap.api", name = "search", version.ref = "amap-search" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
