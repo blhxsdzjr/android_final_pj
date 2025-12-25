@@ -48,6 +48,10 @@
         <activity android:name=".AddCourseActivity" />
         <activity android:name=".AddTodoActivity" />
         <activity android:name=".ManageCoursesActivity" />
+        <activity android:name=".MarketActivity" />
+        <activity android:name=".AddPostActivity" />
+        <activity android:name=".PostDetailActivity" 
+            android:windowSoftInputMode="adjustResize"/>
         
         <receiver android:name=".AlarmReceiver" />
         

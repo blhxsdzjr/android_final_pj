@@ -20,8 +20,10 @@ This document tracks the development progress of the "Campus Assistant" Android 
         - [ ] 使用 `BottomNavigationView` 或 `TabLayout` 实现 `MainActivity`。
     - [ ] Create placeholder Fragments for main modules:
         - [ ] 为主要模块创建占位 Fragment：
-        - [ ] `HomeFragment` (Dashboard)
-            - [ ] `HomeFragment`（仪表盘）
+        - [x] `HomeFragment` (Dashboard)
+            - [x] `HomeFragment`（仪表盘）
+            - [x] **Requirement**: Display today's course schedule and non-completed to-do list.
+                - [x] **需求**：显示当天的课表和未完成的待办事项。
         - [ ] `MapFragment` (Campus Map)
             - [ ] `MapFragment`（校园地图）
         - [ ] `ScheduleFragment` (Calendar/Todo)
@@ -118,8 +120,21 @@ This document tracks the development progress of the "Campus Assistant" Android 
     - [ ] Implement simple path planning (draw line between user and selected destination).
         - [ ] 实现简单的路径规划（在用户和选定目的地之间画线）。
 
-## Phase 5: Network Modules (News & AI) & User Center (Week 5)
-## 第五阶段：网络模块（新闻与 AI）及用户中心（第五周）
+## Phase 5: Campus Market, Network Modules & User Center (Week 5)
+## 第五阶段：校园集市、网络模块及用户中心（第五周）
+- [x] **Campus Market Module (New)**
+    - [x] **校园集市模块（新增）**
+    - [x] **Database**: Create `MarketPost` and `MarketComment` entities.
+        - [x] **数据库**：创建 `MarketPost` 和 `MarketComment` 实体。
+    - [x] **Logic**: Support posting, commenting, and nested replies (replying to comments).
+        - [x] **逻辑**：支持发帖、评论和嵌套回复（回复评论）。
+    - [x] **UI**:
+        - [x] Market Feed (List of posts).
+            - [x] 集市信息流（帖子列表）。
+        - [x] Post Detail Activity (Show post content + recursive comment list).
+            - [x] 帖子详情 Activity（显示帖子内容 + 递归评论列表）。
+        - [x] Create Post/Comment Interface.
+            - [x] 发帖/评论界面。
 - [ ] **AI Assistant (LLM Integration)**
     - [ ] **AI 助手（LLM 集成）**
     - [ ] Register for an LLM API (e.g., OpenAI/Aliyun).
@@ -144,8 +159,6 @@ This document tracks the development progress of the "Campus Assistant" Android 
         - [x] 个人资料编辑（头像、昵称）。
     - [x] Implement logout functionality.
         - [x] 实现退出登录功能。
-    - [ ] Theme switching (Dark/Light mode toggle).
-        - [ ] 主题切换（深色/浅色模式切换）。
     - [ ] "About" page.
         - [ ] “关于”页面。
 

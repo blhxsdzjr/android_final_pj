@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Course.class, Todo.class, User.class}, version = 5, exportSchema = false)
+@Database(entities = {Course.class, Todo.class, User.class, MarketPost.class, MarketComment.class}, version = 6, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
@@ -20,6 +20,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract CourseDao courseDao();
     public abstract TodoDao todoDao();
     public abstract UserDao userDao();
+    public abstract MarketDao marketDao();
 
     public static synchronized AppDatabase getInstance(android.content.Context context) {
         if (instance == null) {
