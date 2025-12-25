@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -36,8 +37,9 @@ import java.util.concurrent.Executors;
 
 public class ProfileFragment extends Fragment {
 
-    private MaterialButton btnExport, btnImport, btnSaveConfig;
+    private MaterialButton btnExport, btnImport, btnSaveConfig, btnLogout;
     private TextInputEditText etApiKey, etApiUrl, etModelName;
+    private TextView tvUsername;
     private Gson gson = new Gson();
 
     @Nullable
@@ -48,17 +50,39 @@ public class ProfileFragment extends Fragment {
         btnExport = view.findViewById(R.id.btn_export_data);
         btnImport = view.findViewById(R.id.btn_import_data);
         btnSaveConfig = view.findViewById(R.id.btn_save_ai_config);
+        btnLogout = view.findViewById(R.id.btn_logout);
         etApiKey = view.findViewById(R.id.et_api_key);
         etApiUrl = view.findViewById(R.id.et_api_url);
         etModelName = view.findViewById(R.id.et_model_name);
+        tvUsername = view.findViewById(R.id.tv_profile_username);
 
         loadAiConfig();
+        displayUserInfo();
 
         btnExport.setOnClickListener(v -> exportData());
         btnImport.setOnClickListener(v -> importDataLauncher.launch(new String[]{"application/json"}));
         btnSaveConfig.setOnClickListener(v -> saveAiConfig());
+        btnLogout.setOnClickListener(v -> logout());
 
         return view;
+    }
+
+    private void displayUserInfo() {
+        if (getContext() == null) return;
+        SharedPreferences prefs = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        String username = prefs.getString("username", "校园助手用户");
+        if (tvUsername != null) tvUsername.setText(username);
+    }
+
+    private void logout() {
+        if (getContext() == null) return;
+        SharedPreferences prefs = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("isLoggedIn", false).apply();
+
+        Intent intent = new Intent(requireContext(), com.example.final_pj.LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        requireActivity().finish();
     }
 
     private void loadAiConfig() {

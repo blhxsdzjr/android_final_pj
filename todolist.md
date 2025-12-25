@@ -138,10 +138,12 @@ This document tracks the development progress of the "Campus Assistant" Android 
         - [ ] 解析 JSON 并在 `DiscoveryFragment` 中显示新闻列表。
     - [ ] (Optional) Click to view details.
         - [ ] （可选）点击查看详情。
-- [ ] **Personal Center**
-    - [ ] **个人中心**
-    - [ ] Profile editing (Avatar, Nickname).
-        - [ ] 个人资料编辑（头像、昵称）。
+- [x] **Personal Center**
+    - [x] **个人中心**
+    - [x] Profile editing (Avatar, Nickname).
+        - [x] 个人资料编辑（头像、昵称）。
+    - [x] Implement logout functionality.
+        - [x] 实现退出登录功能。
     - [ ] Theme switching (Dark/Light mode toggle).
         - [ ] 主题切换（深色/浅色模式切换）。
     - [ ] "About" page.
