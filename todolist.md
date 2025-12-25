@@ -182,11 +182,10 @@ This document tracks the development progress of the "Campus Assistant" Android 
         - [ ] 在不同屏幕尺寸上进行测试（如果可能）。
     - [ ] Code cleanup and commenting.
         - [ ] 代码清理和注释。
-- [ ] **Documentation**
+    - [ ] **Documentation**
     - [ ] **文档**
-    - [ ] Write Project Report / Thesis (as per `todo-ver0.md` structure).
-        - [ ] 撰写项目报告/论文（按照 `todo-ver0.md` 的结构）。
-    - [ ] Prepare presentation/demo.
+    - [x] Write Project Report / Thesis (as per `todo-ver0.md` structure).
+        - [x] 撰写项目报告/论文（按照 `todo-ver0.md` 的结构）。    - [ ] Prepare presentation/demo.
         - [ ] 准备演示文稿/演示。
 
 ## Phase 7: Data Import & Export (Optional Extensions)
